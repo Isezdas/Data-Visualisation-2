@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malaysia Crimes Between 2016 - 2023</title>
+
+  <!-- Vega & Vega-Lite -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background-color: #0f172a;
+      color: #e5e7eb;
+      text-align: center;
+      margin: 0;
+      padding: 15px;
+    }
+
+    h1 {
+      margin-bottom: 4px;
+      font-size: 35px;
+      font-family: 'Times New Roman', Times, serif;
+
+    }
+
+    p {
+      color: #ffffff;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 12px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* --- grid layout --- */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      justify-content: center;
+      max-width: 5px; /* smaller total width */
+      margin: 0 auto;
+    }
+
+    .vis-box {
+      background-color: #182636;
+      border-radius: 8px;
+      padding: 5px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .wide {
+      grid-column: span 2;
+    }
+
+    /* --- insights --- */
+    .insights {
+      max-width: 640px;
+      margin: 20px auto;
+      background: #1e293b;
+      padding: 12px 18px;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 12.5px;
+    }
+
+    .insights h3 {
+      color: #f8fafc;
+      margin-top: 0;
+      font-size: 13.5px;
+    }
+
+    .insights li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Malaysia Crimes Between 2016 - 2023</h1>
+  <p>Crimes in Malaysia is divided into Assault and Property crime types</p>
+
+  <div class="grid">
+    <!-- Assault Map -->
+    <div class="vis-box">
+      <div id="assaultMap"></div>
+      <div class="analysis">
+        <p>Selangor and Johor has the highest average number of assault cases over the span of 8 years.
+          This is likely due to the higher population density within these states.
+        </p>
+      </div>
+    </div>
+
+    <!-- Property Map -->
+    <div class="vis-box">
+      <div id="propertyMap"></div>
+      <div class="analysis">
+        <p>Property crimes are notably concentrated in west coast and northern states of Malaysia. Especially in Selangor and Johor.
+          Likely due to stronger economic activity and higher urban density.
+          Property crime in Sabah and Sarawak is also much higher compared to most states in Peninsular Malaysia.
+        </p>
+      </div>
+    </div>
+
+    <!-- Crime Trends Line Chart -->
+    <div class="vis-box wide">
+      <div id="crimeLine"></div>
+      <div class="analysis">
+        <p>Both property and assault crimes show overall decline over the span of 8 years. 
+        There was also a bigger decline in cases during COVID-19,
+        with crime rates stabilising afterwards.</p>
+      </div>
+    </div>
+
+    <!-- ASEAN Crime Bar Chart -->
+    <div class="vis-box wide">
+      <div id="aseanCrimeBar"></div>
+      <div class="analysis">
+        <p>Malaysia recorded the highest crime index in ASEAN for 2023, almost 
+        more than double that of Singapore and Brunei.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    // Smaller, balanced dimensions for compact layout
+    vegaEmbed("#assaultMap", "assault_map.vl.json", { actions: false, width: 800, height: 400 });
+    vegaEmbed("#propertyMap", "property_map.vl.json", { actions: false, width: 800, height: 400 });
+    vegaEmbed("#crimeLine", "crime_rates.vl.json", { actions: false, width: 850, height: 120});
+    vegaEmbed("#aseanCrimeBar", "asean_crime_bar.vl.json", { actions: false, width: 885, height: 400 });
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "ASEAN Crime Index Comparison (2023)",
+    "subtitle": "Malaysia stands out with the highest recorded crime index among ASEAN nations",
+    "fontSize": 14,
+    "subtitleFontSize": 11,
+    "anchor": "middle"
+  },
+  "data": { "url": "data/asean_crime_index_2023.csv" },
+  "width": 1000,
+  "height": 300,
+  "mark": {
+    "type": "bar",
+    "cornerRadiusTopLeft": 10,
+    "cornerRadiusTopRight": 10,
+    "width": 50
+  },
+  "encoding": {
+    "x": {
+      "field": "country",
+      "type": "ordinal",
+      "axis": { "labelAngle": 0, "title": "Country" },
+      "sort": "-y"
+    },
+    "y": {
+      "field": "crimeIndex",
+      "type": "quantitative",
+      "title": "Crime Index (2023)"
+    },
+    "color": {
+      "condition": {
+        "test": "datum.country == 'Malaysia'",
+        "value": "#e74c3c"
+      },
+      "value": "#3498db"
+    },
+    "tooltip": [
+      { "field": "country", "title": "Country" },
+      { "field": "crimeIndex", "title": "Crime Index", "format": ".2f" }
+    ]
+  },
+  "config": {
+    "background": "#e6f2ff",
+    "axis": {
+      "labelFont": "Inter",
+      "titleFont": "Inter",
+      "grid": false,
+      "domainWidth": 1.2
+    },
+    "view": { "stroke": "transparent" }
+  }
+}

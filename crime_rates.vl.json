@@ -1,0 +1,135 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Cumulative Assault vs Property Crimes in Malaysia (2016–2023)",
+    "fontSize": 12,
+    "fontWeight": "bold",
+    "anchor": "middle",
+    "color": "#1e293b"
+  },
+  "data": { "url": "data/malaysia_cumulative_crimes.csv" },
+
+  "vconcat": [
+    {
+      "width": 1000,
+      "height": 300,
+      "layer": [
+        {
+          "mark": {
+            "type": "line",
+            "interpolate": "monotone",
+            "strokeWidth": 2
+          },
+          "encoding": {
+            "x": {
+              "field": "year",
+              "type": "ordinal",
+              "title": "Year",
+              "scale": {
+                "domain": ["2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"]
+              },
+              "axis": {
+                "labelAngle": 0,
+                "titleFontSize": 13,
+                "labelFontSize": 12
+              }
+            },
+            "y": {
+              "field": "crimes",
+              "type": "quantitative",
+              "title": "Number of Crimes",
+              "axis": {
+                "titleFontSize": 13,
+                "labelFontSize": 12
+              }
+            },
+            "color": {
+              "field": "category",
+              "type": "nominal",
+              "title": "Crime Type",
+              "scale": { "range": ["#e74c3c", "#3498db"] }
+            },
+            "tooltip": [
+              { "field": "year", "type": "ordinal", "title": "Year" },
+              { "field": "category", "type": "nominal", "title": "Crime Type" },
+              { "field": "crimes", "type": "quantitative", "title": "Number of Crimes", "format": "," }
+            ]
+          },
+          "transform": [{ "filter": { "param": "brush" } }]
+        },
+        { 
+          "mark": { "type": "rule", "strokeDash": [6, 4], "color": "#1e1e1e", "strokeWidth": 0.6 },
+          "encoding": { "x": { "datum": "2020" } }
+        },
+        {
+          "mark": {"type": "point", "filled": true, "size": 60, "color": "red", "strokeWidth": 2},
+          "encoding": {
+            "x": { "field": "year", "type": "ordinal" }, 
+            "y": { "field": "crimes", "type": "quantitative" },
+            "color": {
+              "field": "category",
+              "type": "nominal",
+              "scale": { "range": ["#e74c3c", "#3498db"] }              
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+
+            "text": "Covid-19 Begins",
+            "align": "center",
+            "baseline": "bottom",
+            "dy": -20,
+            "color": "#000000",
+            "fontSize": 10
+          },
+          "encoding": {
+            "x": { "datum": "2020" },
+            "y": { "datum": 95000 }
+          }
+        }
+      ]
+    },
+    {
+      "width": 1000,
+      "height": 120,
+      "mark": {
+        "type": "line",
+        "interpolate": "monotone",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": "Select range to zoom",
+          "axis": { "labelAngle": 0 }
+        },
+        "y": { "field": "crimes", "type": "quantitative", "title": null },
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "legend": null,
+          "scale": { "range": ["#e74c3c", "#3498db"] }
+        }
+      },
+      "params": [
+        { "name": "brush", "select": { "type": "interval", "encodings": ["x"] } }
+      ]
+    }
+  ],
+
+  "config": {
+    "background": "white",
+    "axis": {
+      "domain": true,
+      "domainWidth": 2,
+      "grid": true,     
+      "tickColor": "#121212",
+      "labelColor": "#1e293b",
+      "titleColor": "#1e293b"
+    },
+    "view": { "stroke": "transparent" }
+  }
+}
