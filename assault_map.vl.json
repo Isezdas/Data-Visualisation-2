@@ -1,0 +1,56 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Average 8-Year Assault Crime Cases by State (2016–2023)",
+    "font": "Times New Roman",
+    "fontSize": 18,
+    "fontWeight": "bold",
+    "color": "#1e293b",
+    "anchor": "middle",
+    "offset": 12
+  },
+  "width": 650,
+  "height": 400,
+  "background": "#e6f2ff",
+  "projection": { "type": "mercator", "center": [109.5, 3.5], "scale": 1750 },
+  "layer": [
+    { "data": { "sphere": {} }, "mark": { "type": "geoshape", "fill": "#dff0ff" } },
+    { "data": { "graticule": { "step": [5, 5] } }, "mark": { "type": "geoshape", "stroke": "#9bbcd1", "strokeWidth": 0.6, "opacity": 0.7 } },
+    {
+      "data": { "url": "data/malaysia.json", "format": { "type": "topojson", "feature": "mytopojson" } },
+      "mark": { "type": "geoshape", "fill": "#f9fdff", "stroke": "#9ec0d6", "strokeWidth": 0.6 }
+    },
+    {
+      "data": { "url": "data/assault_avg.csv", "format": { "type": "csv" } },
+      "transform": [
+        {
+          "lookup": "state",
+          "from": { "data": { "url": "data/state_centroids.csv" }, "key": "state", "fields": ["lon", "lat"] }
+        }
+      ],
+      "mark": { "type": "circle", "opacity": 0.75, "stroke": "#0f172a", "strokeWidth": 0.6 },
+      "encoding": {
+        "longitude": { "field": "lon" },
+        "latitude": { "field": "lat" },
+        "size": {
+          "field": "avg_assault",
+          "type": "quantitative",
+          "scale": { "type": "sqrt", "range": [0, 1650] }
+        },
+        "color": {
+          "field": "avg_assault",
+          "type": "quantitative",
+          "title": "Average Assault Cases (2016–2023)",
+          "scale": { "scheme": "orangered" }
+        },
+        "tooltip": [
+          { "field": "state", "title": "State" },
+          { "field": "avg_assault", "title": "Average Assault Cases", "format": "," }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "legend": { "orient": "bottom-left", "labelFontSize": 9, "titleFontSize": 10, "offset": -5 }
+  }
+}
